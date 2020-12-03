@@ -4,10 +4,12 @@ import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Post {
@@ -20,10 +22,14 @@ public class Post {
     private String description;
     private String content;
 
-    @ManyToOne
+    @ManyToOne(targetEntity=Group.class)
     private Group group;
 
+    @ManyToOne(targetEntity=User.class)
+    private User user;
+
     @ElementCollection
+    @OneToMany(targetEntity = Comment.class, mappedBy ="post", fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
     public Post(String name, String description, String content, Group group, Set<Comment> comments) {

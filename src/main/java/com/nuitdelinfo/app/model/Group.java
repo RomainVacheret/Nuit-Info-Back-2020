@@ -21,9 +21,8 @@ public class Group {
     private String name;
 
     @ElementCollection
-    @ManyToMany(targetEntity=User.class, mappedBy="group", fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity=User.class, mappedBy="groups", fetch = FetchType.EAGER)
     private Map<String, User> subscribers;
-
 
     @ElementCollection
     @OneToMany(targetEntity = Post.class, mappedBy ="group", fetch = FetchType.EAGER)

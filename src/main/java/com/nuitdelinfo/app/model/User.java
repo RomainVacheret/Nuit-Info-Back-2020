@@ -33,12 +33,21 @@ public class User {
     
     @Nullable
     @ElementCollection
-    @ManyToMany(targetEntity = Group.class)
+    @ManyToMany(targetEntity = Group.class, mappedBy ="subscribers", fetch = FetchType.EAGER)
     private  Set<Group> groups;
-    
-    
+
     @ElementCollection
     private Map<String, User> friends;
+
+    @ElementCollection
+    @OneToMany(targetEntity = Comment.class, mappedBy = "user")
+    private Set<Comment> comments;
+
+    @ElementCollection
+    @OneToMany(targetEntity = Post.class, mappedBy = "user")
+    private Set<Post> posts;
+
+
 
     public User(String name, String lastName, String pseudo, String email, String description, Set<Group> groups,
             Map<String, User> friends) {
