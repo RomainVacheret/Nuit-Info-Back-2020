@@ -15,8 +15,11 @@ public class Comment {
 
     private String message;
 
-    @ManyToOne
+    @ManyToOne(targetEntity=User.class)
     private User user;
+    
+    @ManyToOne(targetEntity=Post.class)
+    private User post;
 
 	@Override
 	public String toString() {

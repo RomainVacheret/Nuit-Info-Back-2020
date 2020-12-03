@@ -43,6 +43,12 @@ public class User {
     @OneToMany(targetEntity = Comment.class, mappedBy = "user")
     private Set<Comment> comments;
 
+    @ElementCollection
+    @OneToMany(targetEntity = Post.class, mappedBy = "user")
+    private Set<Post> posts;
+
+
+
     public User(String name, String lastName, String pseudo, String email, String description, Set<Group> groups,
             Map<String, User> friends) {
         this.name = name;
