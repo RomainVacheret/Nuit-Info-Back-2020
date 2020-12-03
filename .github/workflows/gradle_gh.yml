@@ -23,4 +23,4 @@ jobs:
       - name: Generate documentation
         run: ./gradlew asciidoctor
       - name: Send data to coveralls
-        run: curl -F 'json_file=@build/coveralls/report.json' 'https://coveralls.io/api/v1/jobs'
+        run: curl -F 'json_file=@build/jacocoHtml/index.html' 'https://coveralls.io/api/v1/jobs'
