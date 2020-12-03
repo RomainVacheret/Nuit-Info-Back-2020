@@ -1,0 +1,73 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.0'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+	id 'application'
+
+    // AsciiDoctor (doc)
+    id 'org.asciidoctor.jvm.pdf' version '3.2.0'
+    id 'org.asciidoctor.jvm.gems' version '3.2.0'
+
+    //Sonar
+    id "org.sonarqube" version "3.0"
+
+    //Coveralls
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+}
+
+group = 'com.nuitdelinfo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+// plugin to get the version of the project
+// from https://stackoverflow.com/questions/13198358/how-to-get-project-version-in-custom-gradle-plugin
+// uses version in build.gradle file
+class VersionPlugin implements Plugin<Project> {
+    public void apply(Project project) {
+        project.task('version') {
+            project.gradle.projectsEvaluated {
+                println "$project.version"
+            }
+        }
+    }
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	// This dependency is used by the application.
+    implementation 'com.google.guava:guava:29.0-jre'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.13'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'com.nuitdelinfo.app.Application'
+}
