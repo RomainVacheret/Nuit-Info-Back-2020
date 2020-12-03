@@ -32,6 +32,11 @@ class VersionPlugin implements Plugin<Project> {
         }
     }
 }
+apply plugin: 'application'
+// apply plugin: 'org.sonarqube'
+// apply plugin: 'jacoco'
+// apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: VersionPlugin
 
 configurations {
 	compileOnly {
@@ -70,4 +75,43 @@ test {
 application {
     // Define the main class for the application.
     mainClassName = 'com.nuitdelinfo.app.Application'
+}
+
+asciidoctorPdf {
+  dependsOn asciidoctorGemsPrepare
+
+  baseDirFollowsSourceFile()
+
+  asciidoctorj {
+    requires 'rouge'
+    attributes 'build-gradle': file('build.gradle'),
+        'sourcedir': project.sourceSets.main.java.srcDirs[0],
+        'outputDir': file("${buildDir}/docs"),
+        'endpoint-url': 'http://example.org',
+        'source-highlighter': 'rouge',
+        //'imagesdir': './images',
+        'toc': 'left',
+        'icons': 'font',
+        'idprefix': '',
+        'idseparator': '-'
+  }
+}
+// alias
+task asciidoctor(dependsOn: asciidoctorPdf)
+
+jacoco {
+  reportsDir = file("${buildDir}/jacoco") // this is the default
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+        html.destination = file("${buildDir}/jacocoHtml")
+    }
+}
+
+coveralls {
+    saveAsFile = true
+    sendToCoveralls = false
 }
