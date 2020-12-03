@@ -1,5 +1,6 @@
 package com.nuitdelinfo.app.users.service;
 
+import java.util.Optional;
 import com.nuitdelinfo.app.model.Group;
 import com.nuitdelinfo.app.model.User;
 
@@ -8,14 +9,15 @@ public interface UserService {
     void connection(User user);
     void deconnection(User user);
 
-    void addFriend(User friend, User user);
-    void deleteFriend(User user,String friendName);
+    void addFriend(Optional<User> user, Optional<User> friend);
+    void deleteFriend(Optional<User> user,String friendName);
 
-    void modifyName(User user,String name);
-    void modifyLastName(User user,String lastName);
-    void modifyPseudo(User user,String pseudo);
-    void modifyEmail(User user,String email);
+    void modifyName(Optional<User> user,String name);
+    void modifyLastName(Optional<User> user,String lastName);
+    void modifyPseudo(Optional<User> user,String pseudo);
+    void modifyEmail(Optional<User> user,String email);
 
-    void addGroup(User user,Group group);
-    void deleteGroup(User user,Group group);
+    void subscribe(Optional<User> user,Optional<Group> group);
+    void unsubscribe(Optional<User> user,Long idg);
+	Optional<User> getByID(Long id);
 }
