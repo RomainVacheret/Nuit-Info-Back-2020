@@ -1,5 +1,9 @@
 package com.nuitdelinfo.app.users.service;
 
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collector;
+
 import com.nuitdelinfo.app.model.Group;
 import com.nuitdelinfo.app.model.User;
 import com.nuitdelinfo.app.users.repository.UserRepository;
@@ -23,45 +27,64 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addFriend(User friend, User user) {
-        user.getFriends().put(friend.getName(), friend);
+    public void addFriend(Optional<User> user, Optional<User> friend) {
+        if(user.isPresent() && friend.isPresent())
+            user.get().getFriends().put(friend.get().getName(), friend.get());
     }
 
     @Override
-    public void deleteFriend(User user,String friendName) {
-        user.getFriends().remove(friendName);
-
-    }
-
-    @Override
-    public void modifyName(User user,String name) {
-        user.setName(name);
-    }
-
-    @Override
-    public void modifyLastName(User user,String lastName) {
-        user.setLastName(lastName);
-    }
-
-    @Override
-    public void modifyPseudo(User user,String pseudo) {
-        user.setPseudo(pseudo);
-    }
-
-    @Override
-    public void modifyEmail(User user,String email) {
-        user.setEmail(email);
-    }
-
-    @Override
-    public void addGroup(User user,Group group) {
-        user.getGroups().add(group);
+    public void deleteFriend(Optional<User> user,String friendName) {
+        if(user.isPresent())
+            user.get().getFriends().remove(friendName);
 
     }
 
     @Override
-    public void deleteGroup(User user,Group group) {
-        user.getGroups().remove(group);
+    public void modifyName(Optional<User> user,String name) {
+        if( user.isPresent())
+            user.get().setName(name);
+        
+    }
+
+    @Override
+    public void modifyLastName(Optional<User> user,String lastName) {
+        if( user.isPresent() ){
+            user.get().setLastName(lastName);
+        }
+    }
+
+    @Override
+    public void modifyPseudo(Optional<User> user,String pseudo) {
+        if( user.isPresent() ){
+            user.get().setPseudo(pseudo);
+        }
+    }
+
+    @Override
+    public void modifyEmail(Optional<User> user,String email) {
+        if( user.isPresent() ){
+            user.get().setEmail(email);
+        }
+    }
+
+    @Override
+    public void subscribe(Optional<User> user,Optional<Group> group) {
+        user.map(u -> u.getGroups().add(group.get()));
 
     }
+    
+    @Override
+    public void unsubscribe(Optional<User> user,Long idg) {
+        if(user.isPresent()){
+            user.get().getGroups().forEach(g -> {
+                if(g.getId() == idg)
+                    user.get().getGroups().remove(g);
+            });
+        }
+    }
+
+	@Override
+	public Optional<User> getByID(Long id) {
+		return repository.findById(id);
+	}
 }
