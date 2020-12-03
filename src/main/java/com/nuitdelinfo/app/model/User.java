@@ -3,6 +3,7 @@ package com.nuitdelinfo.app.model;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,45 +13,31 @@ import javax.persistence.OneToMany;
 
 import org.springframework.lang.Nullable;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@EqualsAndHashCode
-@ToString
 @Entity
-@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    private @Getter long id;
+    private  long id;
 
-    @Setter
-    private @Getter String name;
+    private String name;
 
-    @Setter
-    private @Getter String lastName;
+    private String lastName;
 
-    @Setter
-    private @Getter String pseudo;
+    private String pseudo;
 
-    @Setter
-    private @Getter String email;
+    private String email;
     
-    @Setter
     @Nullable
-    private @Getter String description;
+    private  String description;
     
     @OneToMany(targetEntity=Group.class, mappedBy="user", fetch = FetchType.EAGER)
-    @Setter
     @Nullable
-    private @Getter Set<Group> groups;
+    @ElementCollection
+    private  Set<Group> groups;
     
-    @Setter
-    private @Getter Map<String, User> friends;
+    
+    @ElementCollection
+    private Map<String, User> friends;
 
     public User(String name, String lastName, String pseudo, String email, String description, Set<Group> groups,
             Map<String, User> friends) {
@@ -61,5 +48,115 @@ public class User {
         this.description = description;
         this.groups = groups;
         this.friends = friends;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
+    public Map<String, User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Map<String, User> friends) {
+        this.friends = friends;
+    }
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("User [description=");
+        builder.append(description);
+        builder.append(", email=");
+        builder.append(email);
+        builder.append(", friends=");
+        builder.append(friends);
+        builder.append(", groups=");
+        builder.append(groups);
+        builder.append(", lastName=");
+        builder.append(lastName);
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", pseudo=");
+        builder.append(pseudo);
+        builder.append("]");
+        return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id != other.id)
+            return false;
+        return true;
     }
 }

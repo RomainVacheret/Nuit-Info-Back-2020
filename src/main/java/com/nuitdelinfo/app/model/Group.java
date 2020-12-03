@@ -2,40 +2,98 @@ package com.nuitdelinfo.app.model;
 
 import java.util.Map;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity
-@NoArgsConstructor
-@ToString
-@EqualsAndHashCode
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
-    private @Getter long id;
+    private long id;
 
-    @Setter
-    private @Getter String name;
+    private String name;
 
-    @Setter
-    private @Getter Map<String, User> subscribers;
+    @ElementCollection
+    private Map<String, User> subscribers;
 
-    @ManyToOne(targetEntity = User.class)
-    @Setter
-    private @Getter User user;
+    @ManyToOne
+    private User user;
 
     public Group(String name, Map<String, User> subscribers) {
         this.name = name;
         this.subscribers = subscribers;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Map<String, User> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Map<String, User> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Group() {
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Group [name=");
+        builder.append(name);
+        builder.append(", subscribers=");
+        builder.append(subscribers);
+        builder.append(", user=");
+        builder.append(user);
+        builder.append("]");
+        return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (int) (id ^ (id >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Group other = (Group) obj;
+        if (id != other.id)
+            return false;
+        return true;
     }
 }
