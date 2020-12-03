@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.springframework.lang.Nullable;
@@ -30,9 +31,9 @@ public class User {
     @Nullable
     private  String description;
     
-    @OneToMany(targetEntity=Group.class, mappedBy="user", fetch = FetchType.EAGER)
     @Nullable
     @ElementCollection
+    @ManyToMany(targetEntity = Group.class)
     private  Set<Group> groups;
     
     

@@ -40,8 +40,9 @@ package main{
                 class Post {
                     - name: string
                     - description: string
-                    - content: content
+                    - content: Content
                     - comments: Set<Comment>
+                    - group: Group
                     + this(name: string, subscribers: Map<string, User>)
                 }
 

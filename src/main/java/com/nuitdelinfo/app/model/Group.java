@@ -1,13 +1,17 @@
 package com.nuitdelinfo.app.model;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 @Entity
 public class Group {
     @Id
@@ -17,10 +21,13 @@ public class Group {
     private String name;
 
     @ElementCollection
+    @ManyToMany(targetEntity=User.class, mappedBy="group", fetch = FetchType.EAGER)
     private Map<String, User> subscribers;
 
-    @ManyToOne
-    private User user;
+
+    @ElementCollection
+    @OneToMany(targetEntity = Post.class, mappedBy ="group", fetch = FetchType.EAGER)
+    private Set<Post> posts;
 
     public Group(String name, Map<String, User> subscribers) {
         this.name = name;
@@ -51,14 +58,6 @@ public class Group {
         this.subscribers = subscribers;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Group() {
     }
 
@@ -70,7 +69,6 @@ public class Group {
         builder.append(", subscribers=");
         builder.append(subscribers);
         builder.append(", user=");
-        builder.append(user);
         builder.append("]");
         return builder.toString();
     }
@@ -95,5 +93,13 @@ public class Group {
         if (id != other.id)
             return false;
         return true;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
     }
 }
