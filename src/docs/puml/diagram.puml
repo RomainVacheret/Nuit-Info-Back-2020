@@ -1,0 +1,33 @@
+@startuml diagram
+!include commons.style
+
+package main{
+    package java.com.nuitdelinfo.app {
+        package model {
+            class User {
+                - name: string
+                - lastname: string
+                - pseudo: string
+                - email: string
+                - description: string
+                - group: Group
+                + this(name: string, lastname: string, email: string, description: string)
+            }
+
+            class Message {
+                - source: User
+                - destination: User
+                - content: string
+                + this(source: User, destination: User, content: string )
+            }
+
+            class Group {
+                - name: string
+                - subscribers: Map<string, User>
+                + this(name: string, subscribers: Map<string, User>)
+            }
+        }
+    }
+}
+User *--> Group
+@enduml
