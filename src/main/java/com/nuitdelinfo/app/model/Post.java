@@ -20,7 +20,7 @@ public class Post {
     private String description;
     private String content;
 
-    @ManyToOne
+    @ManyToOne(targetEntity=Group.class)
     private Group group;
 
     @ElementCollection
