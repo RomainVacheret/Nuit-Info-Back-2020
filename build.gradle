@@ -94,13 +94,13 @@ asciidoctorPdf {
         'icons': 'font',
         'idprefix': '',
         'idseparator': '-'
-  }
+    }
 }
 // alias
 task asciidoctor(dependsOn: asciidoctorPdf)
 
 jacoco {
-  reportsDir = file("${buildDir}/jacoco") // this is the default
+  reportsDir = file("${buildDir}/reports/jacoco") // this is the default
 }
 
 jacocoTestReport {
