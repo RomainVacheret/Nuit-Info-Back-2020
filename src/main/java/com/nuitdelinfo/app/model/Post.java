@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.ManyToAny;
-
 @Entity
 public class Post {
 
@@ -20,7 +18,7 @@ public class Post {
     
     private String name;
     private String description;
-    private Content content;
+    private String content;
 
     @ManyToOne
     private Group group;
@@ -28,7 +26,7 @@ public class Post {
     @ElementCollection
     private Set<Comment> comments;
 
-    public Post(String name, String description, Content content, Group group, Set<Comment> comments) {
+    public Post(String name, String description, String content, Group group, Set<Comment> comments) {
         this.name = name;
         this.description = description;
         this.content = content;
@@ -63,11 +61,11 @@ public class Post {
         this.description = description;
     }
 
-    public Content getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Content content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

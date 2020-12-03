@@ -1,5 +1,8 @@
 package com.nuitdelinfo.app.model;
 
-public class Comment {
+import javax.persistence.Entity;
 
+@Entity
+public class Comment {
+    
 }
