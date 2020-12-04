@@ -13,6 +13,8 @@ import com.nuitdelinfo.app.token.ConfirmationTokenService;
 import com.nuitdelinfo.app.users.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.Ordered;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 @RestController
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     
