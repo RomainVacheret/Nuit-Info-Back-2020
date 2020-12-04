@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 @RestController
-@Order(Ordered.HIGHEST_PRECEDENCE)
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     
