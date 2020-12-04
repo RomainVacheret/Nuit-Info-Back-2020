@@ -1,4 +1,4 @@
-package com.nuitdelinfo.app.security;
+package com.nuitdelinfo.app.config;
 
 import com.nuitdelinfo.app.users.service.UserService;
 

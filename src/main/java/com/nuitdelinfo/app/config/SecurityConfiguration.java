@@ -1,4 +1,4 @@
-package com.nuitdelinfo.app.security;
+package com.nuitdelinfo.app.config;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
