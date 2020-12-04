@@ -11,9 +11,10 @@ package main{
                 - email: string
                 - description: string
                 - group: Group
+                - friends: Map<string, User>
                 + this(name: string, lastname: string, email: string, description: string)
             }
-
+        
             class Message {
                 - source: User
                 - destination: User
@@ -24,7 +25,24 @@ package main{
             class Group {
                 - name: string
                 - subscribers: Map<string, User>
+                - posts: Map<string, Post>
                 + this(name: string, subscribers: Map<string, User>)
+            }
+
+            class Post {
+                - user: User
+                - name: string
+                - description: string
+                - content: Content
+                - comments: Set<Comment>
+                - group: Group
+                + this(name: string, subscribers: Map<string, User>)
+            }
+
+            class Comments {
+                - user: User
+                - message: string
+                + this(user: User, message: string)
             }
         }
     }
