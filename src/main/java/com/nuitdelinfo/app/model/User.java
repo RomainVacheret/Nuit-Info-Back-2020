@@ -2,6 +2,8 @@ package com.nuitdelinfo.app.model;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,6 +28,11 @@ import lombok.Builder;
 
 @Entity
 public class User implements UserDetails {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7941309401439728324L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -68,15 +75,14 @@ public class User implements UserDetails {
     @OneToMany(targetEntity = Post.class, mappedBy = "user")
     private Set<Post> posts;
 
-    public User(String name, String lastName, String pseudo, String email, String description, Set<UGroup> groups,
-            Map<String, User> friends, String password, ConfirmationToken userToken) {
+    public User(String name, String lastName, String pseudo, String email, String password, ConfirmationToken userToken) {
         this.name = name;
         this.lastName = lastName;
         this.pseudo = pseudo;
         this.email = email;
-        this.description = description;
-        this.userGroups = groups;
-        this.friends = friends;
+        this.userGroups = new HashSet<>();
+        this.posts = new HashSet<>();
+        this.friends = new HashMap<>();
         this.password = password;
         this.userToken = userToken;
     }
