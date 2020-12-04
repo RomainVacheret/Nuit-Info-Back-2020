@@ -10,9 +10,9 @@ public interface GroupService {
     void addUsertoGroup(Optional<UGroup> group, Optional<User> user);
     void deleteUsertoGroup(Optional<UGroup> group, Optional<User> user,String userName);
 
-    void deleteGroupe(Optional<Group> group);
+    void deleteGroupe(Optional<UGroup> group);
 
-    void modifyGName(Optional<Group> group,String name);
+    void modifyGName(Optional<UGroup> group,String name);
 
     void save(UGroup group);
     

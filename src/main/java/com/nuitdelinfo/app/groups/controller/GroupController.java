@@ -2,6 +2,7 @@ package com.nuitdelinfo.app.model;
 
 
 import com.nuitdelinfo.app.groups.service.GroupService;
+import com.nuitdelinfo.app.users.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
