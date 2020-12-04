@@ -4,60 +4,45 @@
 package main{
     package java.com.nuitdelinfo.app {
         package model {
-            package api {
-                interface Component {
-                    + addChild(): void
-                    + removeChild(): void
-                }
+            class User {
+                - name: string
+                - lastname: string
+                - pseudo: string
+                - email: string
+                - description: string
+                - group: Group
+                - friends: Map<string, User>
+                + this(name: string, lastname: string, email: string, description: string)
+            }
+        
+            class Message {
+                - source: User
+                - destination: User
+                - content: string
+                + this(source: User, destination: User, content: string )
             }
 
-            package impl {
-                class User {
-                    - name: string
-                    - lastname: string
-                    - pseudo: string
-                    - email: string
-                    - description: string
-                    - group: Group
-                    - friends: Map<string, User>
-                    + this(name: string, lastname: string, email: string, description: string)
-                }
-            
-                class Message {
-                    - source: User
-                    - destination: User
-                    - content: string
-                    + this(source: User, destination: User, content: string )
-                }
+            class Group {
+                - name: string
+                - subscribers: Map<string, User>
+                - posts: Map<string, Post>
+                + this(name: string, subscribers: Map<string, User>)
+            }
 
-                class Group {
-                    - name: string
-                    - subscribers: Map<string, User>
-                    - posts: Map<string, Post>
-                    + this(name: string, subscribers: Map<string, User>)
-                }
+            class Post {
+                - user: User
+                - name: string
+                - description: string
+                - content: Content
+                - comments: Set<Comment>
+                - group: Group
+                + this(name: string, subscribers: Map<string, User>)
+            }
 
-                class Post {
-                    - name: string
-                    - description: string
-                    - content: Content
-                    - comments: Set<Comment>
-                    - group: Group
-                    + this(name: string, subscribers: Map<string, User>)
-                }
-
-                class Comments extends Component{
-                    - user: User
-                    - message: string
-                    + this()
-                }
-
-                class CompositeComments extends Component {
-                    - user: User
-                    - message: string
-                    - childs: Set<Component>
-                    + this()
-                }
+            class Comments {
+                - user: User
+                - message: string
+                + this(user: User, message: string)
             }
         }
     }

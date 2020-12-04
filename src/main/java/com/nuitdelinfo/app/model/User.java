@@ -33,21 +33,33 @@ public class User {
     
     @Nullable
     @ElementCollection
-    @ManyToMany(targetEntity = Group.class)
-    private  Set<Group> groups;
+    @ManyToMany(targetEntity = UGroup.class, mappedBy ="subscribers", fetch = FetchType.EAGER)
+    private  Set<UGroup> userGroups;
     
-    
+    @Nullable
     @ElementCollection
     private Map<String, User> friends;
 
-    public User(String name, String lastName, String pseudo, String email, String description, Set<Group> groups,
+    @Nullable
+    @ElementCollection
+    @OneToMany(targetEntity = Comment.class, mappedBy = "user")
+    private Set<Comment> comments;
+
+    @Nullable
+    @ElementCollection
+    @OneToMany(targetEntity = Post.class, mappedBy = "user")
+    private Set<Post> posts;
+
+
+
+    public User(String name, String lastName, String pseudo, String email, String description, Set<UGroup> groups,
             Map<String, User> friends) {
         this.name = name;
         this.lastName = lastName;
         this.pseudo = pseudo;
         this.email = email;
         this.description = description;
-        this.groups = groups;
+        this.userGroups = groups;
         this.friends = friends;
     }
 
@@ -99,12 +111,12 @@ public class User {
         this.description = description;
     }
 
-    public Set<Group> getGroups() {
-        return groups;
+    public Set<UGroup> getGroups() {
+        return userGroups;
     }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void setGroups(Set<UGroup> groups) {
+        this.userGroups = groups;
     }
 
     public Map<String, User> getFriends() {
@@ -128,7 +140,7 @@ public class User {
         builder.append(", friends=");
         builder.append(friends);
         builder.append(", groups=");
-        builder.append(groups);
+        builder.append(userGroups);
         builder.append(", lastName=");
         builder.append(lastName);
         builder.append(", name=");
