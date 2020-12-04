@@ -5,17 +5,10 @@ import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 
 public interface GroupService {
-
-
     void addUsertoGroup(Optional<UGroup> group, Optional<User> user);
     void deleteUsertoGroup(Optional<UGroup> group, Optional<User> user,String userName);
-
     void deleteGroupe(Optional<UGroup> group);
-
     void modifyGName(Optional<UGroup> group,String name);
-
     void save(UGroup group);
-    
-
-	Optional<User> getByIDG(Long id);
+    Optional<UGroup> getByIDG(Long id);
 }

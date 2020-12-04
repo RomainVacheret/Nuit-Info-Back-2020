@@ -1,29 +1,29 @@
+package com.nuitdelinfo.app.groups.service;
 
-
-import java.security.acl.Group;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collector;
 
 import com.nuitdelinfo.app.model.UGroup;
+import com.nuitdelinfo.app.model.User;
 import com.nuitdelinfo.app.groups.repository.GroupRepository;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class GroupServiceImpl implements GroupService {
   
     private GroupRepository repository;
 
 
     @Override
-    void addUsertoGroup(Optional<UGroup> group, Optional<User> user){
+    public void addUsertoGroup(Optional<UGroup> group, Optional<User> user) {
         group.map(group.get().getSubscribers().put(user.get().getName(), user.get()));
     }
     
     @Override
-    void deleteUsertoGroup(Optional<UGroup> group, Optional<User> user,String userName){
-        if(group.isPresent() && user.isPresent())
+    public void deleteUsertoGroup(Optional<UGroup> group, Optional<User> user, String userName) {
+        if (group.isPresent() && user.isPresent())
             group.get().getSubscribers().remove(userName);
     }
 
@@ -53,6 +53,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UGroup group){
         repository.save(group);
+    }
+
+    @Override
+    public void deleteGroupe(Optional<UGroup> group) {
+        // TODO Auto-generated method stub
+
     }
 }
 
