@@ -81,7 +81,7 @@ public class UserController {
         userService.subscribe(user, group);
     } */
 
-    @DeleteMapping(path ="/user/{id}/group/{id}")
+    @DeleteMapping(path ="/user/{id}/group/{idg}")
     public void deleteGroup(@RequestParam Long id,@RequestParam Long idg) {
         Optional<User> user = userService.getByID(id);
         userService.unsubscribe(user, idg);

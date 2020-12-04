@@ -1,6 +1,9 @@
 package com.nuitdelinfo.app.users.service;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+
 import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 
@@ -19,5 +22,13 @@ public interface UserService {
 
     void subscribe(Optional<User> user,Optional<UGroup> group);
     void unsubscribe(Optional<User> user,Long idg);
+
+    String displayName();
+    String displayLastName();
+    String displayPseudo();
+    String displayEmail();
+    Map<String, User> displayFriends();
+    Set<UGroup> displayGroups();
+
 	Optional<User> getByID(Long id);
 }
