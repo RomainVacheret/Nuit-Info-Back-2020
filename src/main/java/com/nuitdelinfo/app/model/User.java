@@ -126,6 +126,19 @@ public class User {
     public void setFriends(Map<String, User> friends) {
         this.friends = friends;
     }
+    public void setComment(Comment comment){
+        comments.add(comment);
+    }
+    public Set<Comment> getComments(){
+        return this.comments;
+    }
+    public void setPost(Post post){
+        posts.add(post);
+    }
+    public Set<Post> getPosts(){
+        return this.posts;
+    }
+    
 
     public User() {
     }

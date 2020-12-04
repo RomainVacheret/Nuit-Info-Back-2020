@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import com.nuitdelinfo.app.model.Comment;
+import com.nuitdelinfo.app.model.Post;
 import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 
@@ -23,12 +25,14 @@ public interface UserService {
     void subscribe(Optional<User> user,Optional<UGroup> group);
     void unsubscribe(Optional<User> user,Long idg);
 
-    String displayName();
-    String displayLastName();
-    String displayPseudo();
-    String displayEmail();
-    Map<String, User> displayFriends();
-    Set<UGroup> displayGroups();
+    String displayName(Optional<User> user);
+    String displayLastName(Optional<User> user);
+    String displayPseudo(Optional<User> user);
+    String displayEmail(Optional<User> user);
+    Map<String, User> displayFriends(Optional<User> user);
+    Set<UGroup> displayGroups(Optional<User> user);
+    Set<Comment> displayComments(Optional<User> user);
+    Set<Post> displayPosts(Optional<User> user);
 
 	Optional<User> getByID(Long id);
 }

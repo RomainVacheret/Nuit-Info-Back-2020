@@ -1,13 +1,19 @@
 package com.nuitdelinfo.app.users.controller;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
+import com.nuitdelinfo.app.model.Comment;
+import com.nuitdelinfo.app.model.Post;
+import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 import com.nuitdelinfo.app.users.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class UserController {
     
+    
     @Autowired
-
     private UserService userService;
     //private GroupService groupService;
 
@@ -77,7 +83,7 @@ public class UserController {
     /* @PostMapping(path ="/user/{id}/group/{id}")
     public void addGroup(@RequestParam Long id,@RequestParam Long idg) {
         Optional<User> user = userService.getByID(id);
-        Optional<Group> group = groupService.getByID(idg);
+        Optional<UGroup> group = groupService.getByID(idg);
         userService.subscribe(user, group);
     } */
 
@@ -86,5 +92,51 @@ public class UserController {
         Optional<User> user = userService.getByID(id);
         userService.unsubscribe(user, idg);
     }
-    
+
+    @GetMapping("/user/{id}/name")
+    public String displayName(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayName(user);
+    }
+
+    @GetMapping("/user/{id}/lastname")
+    public String displayLastName(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayLastName(user);
+    }
+
+    @GetMapping("/user/{id}/pseudo")
+    public String displayPseudo(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayPseudo(user);
+    }
+
+    @GetMapping("/user/{id}/email")
+    public String displayEmail(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayEmail(user);
+    }
+    @GetMapping("/user/{id}/friends")
+    public Map<String, User> displayFriends(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayFriends(user);
+    }
+    @GetMapping("/user/{id}/groups")
+    public Set<UGroup> displayGroups(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayGroups(user);
+    }
+
+    @GetMapping("/user/{id}/comments")
+    public Set<Comment> displayComments(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayComments(user);
+    }
+
+    @GetMapping("/user/{id}/posts")
+    public Set<Post> displayPost(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayPosts(user);
+    }
+
     }

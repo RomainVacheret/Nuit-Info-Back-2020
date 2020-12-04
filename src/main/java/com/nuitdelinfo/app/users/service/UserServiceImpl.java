@@ -1,10 +1,13 @@
 package com.nuitdelinfo.app.users.service;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collector;
 
+import com.nuitdelinfo.app.model.Comment;
+import com.nuitdelinfo.app.model.Post;
 import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 import com.nuitdelinfo.app.users.repository.UserRepository;
@@ -89,38 +92,62 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String displayName() {
-        // TODO Auto-generated method stub
+    public String displayName(Optional<User> user) {
+        if (user.isPresent())
+            return user.get().getName();
         return null;
     }
 
     @Override
-    public String displayLastName() {
-        // TODO Auto-generated method stub
+    public String displayLastName(Optional<User> user) {
+        if (user.isPresent())
+            return user.get().getLastName();
         return null;
     }
 
     @Override
-    public String displayPseudo() {
-        // TODO Auto-generated method stub
+    public String displayPseudo(Optional<User> user) {
+        if (user.isPresent())
+            return user.get().getPseudo();
         return null;
     }
 
     @Override
-    public String displayEmail() {
-        // TODO Auto-generated method stub
+    public String displayEmail(Optional<User> user) {
+        if (user.isPresent())
+            return user.get().getEmail();
         return null;
     }
 
     @Override
-    public Map<String, User> displayFriends() {
-        // TODO Auto-generated method stub
+    public Map<String, User> displayFriends(Optional<User> user) {
+        if (user.isPresent())
+            return user.get().getFriends();
         return null;
     }
 
     @Override
-    public Set<UGroup> displayGroups() {
-        // TODO Auto-generated method stub
-        return null;
+    public Set<UGroup> displayGroups(Optional<User> user) {
+        Set<UGroup> groups = new HashSet<>();
+        if (user.isPresent())
+            groups = user.get().getGroups();
+        return groups;
+    }
+
+    @Override
+    public Set<Comment> displayComments(Optional<User> user) {
+       Set<Comment> comments = new HashSet<>();
+       if(user.isPresent())
+            comments = user.get().getComments();
+        return comments;
+    }
+
+    @Override
+    public Set<Post> displayPosts(Optional<User> user) {
+       Set<Post> posts = new HashSet<>();
+       if(user.isPresent()){
+           posts = user.get().getPosts();
+       }
+       return posts;
     }
 }
