@@ -48,9 +48,10 @@ public class UserController {
     // }
     
     @PostMapping("/sign-up")
-	public String signUp(User user) {
-
-		userService.signUpUser(user);
+	public String signUp(Optional<User> user) {
+        if(user.isPresent()){
+            userService.signUpUser(user.get());
+        }
 
 		return "redirect:/sign-in";
     }
