@@ -47,6 +47,7 @@ public class UserController {
 	// 	return "sign-up";
     // }
     
+    @CrossOrigin
     @PostMapping("/sign-up")
 	public String signUp(Optional<User> user) {
         if(user.isPresent()){
@@ -56,6 +57,7 @@ public class UserController {
 		return "redirect:/sign-in";
     }
     
+    @CrossOrigin
     @GetMapping("/confirm")
 	public String confirmMail(@RequestParam("token") String token) {
 
@@ -64,8 +66,8 @@ public class UserController {
 		optionalConfirmationToken.ifPresent(userService::confirmUser);
 
 		return "/sign-in";
-	}
-
+    }
+    @CrossOrigin
     @PutMapping(path = "/user/{id}/name")
     public String modifyName(@RequestParam Long id, String name){
         Optional<User> user = userService.getByID(id);
@@ -75,6 +77,7 @@ public class UserController {
         return "";
     }
 
+    @CrossOrigin
     @PutMapping(path = "/user/{id}/lastname")
     public String modifyLastName(@RequestParam Long id , String lastName){
         Optional<User> user = userService.getByID(id);
@@ -84,6 +87,7 @@ public class UserController {
         return "";
     }
 
+    @CrossOrigin
     @PutMapping(path = "/user/{id}/pseudo")
     public String modifyPseudo(@RequestParam Long id, String pseudo){
         Optional<User> user = userService.getByID(id);
@@ -92,6 +96,8 @@ public class UserController {
             return user.get().getUsername();
         return "";
     }
+
+    @CrossOrigin
     @PutMapping(path = "/user/{id}/email")
     public String modifyEmail(@RequestParam Long id, String email){
         Optional<User> user = userService.getByID(id);
@@ -101,6 +107,7 @@ public class UserController {
         return "";
     }
 
+    @CrossOrigin
     @PostMapping(path = "/user/{id}/friend/{idf}")
     public void addFriend(@RequestParam Long id, @RequestParam Long idf){
         Optional<User> user = userService.getByID(id);
@@ -109,6 +116,7 @@ public class UserController {
             userService.addFriend(user, friend);
     }
 
+    @CrossOrigin
     @DeleteMapping(path = "/user/{id}/friend/{idf}")
     public void deleteFriend(@RequestParam Long id, @RequestParam Long idf){
         Optional<User> user = userService.getByID(id);
@@ -125,58 +133,70 @@ public class UserController {
         userService.subscribe(user, group);
     } */
 
+    @CrossOrigin
     @DeleteMapping(path ="/user/{id}/group/{idg}")
     public void deleteGroup(@RequestParam Long id,@RequestParam Long idg) {
         Optional<User> user = userService.getByID(id);
         userService.unsubscribe(user, idg);
     }
 
+    @CrossOrigin
     @GetMapping("/user/{id}/name")
     public String displayName(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayName(user);
     }
 
+    @CrossOrigin
     @GetMapping("/user/{id}/lastname")
     public String displayLastName(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayLastName(user);
     }
 
+    @CrossOrigin
     @GetMapping("/user/{id}/pseudo")
     public String displayPseudo(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayPseudo(user);
     }
 
+    @CrossOrigin
     @GetMapping("/user/{id}/email")
     public String displayEmail(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayEmail(user);
     }
+
+    @CrossOrigin
     @GetMapping("/user/{id}/friends")
     public Map<String, User> displayFriends(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayFriends(user);
     }
+
+    @CrossOrigin
     @GetMapping("/user/{id}/groups")
     public Set<UGroup> displayGroups(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayGroups(user);
     }
 
+    @CrossOrigin
     @GetMapping("/user/{id}/comments")
     public Set<Comment> displayComments(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayComments(user);
     }
 
+    @CrossOrigin
     @GetMapping("/user/{id}/posts")
     public Set<Post> displayPost(@RequestParam Long id){
         Optional<User> user = userService.getByID(id);
         return userService.displayPosts(user);
     }
 
+    @CrossOrigin
     @GetMapping("/user/registration")
     public String showregistrationForm(WebRequest request, Model model) {
         User user = new User();
