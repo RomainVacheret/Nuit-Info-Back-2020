@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collector;
 
-import com.nuitdelinfo.app.model.Group;
+import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 import com.nuitdelinfo.app.users.repository.UserRepository;
 
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void subscribe(Optional<User> user,Optional<Group> group) {
+    public void subscribe(Optional<User> user,Optional<UGroup> group) {
         user.map(u -> u.getGroups().add(group.get()));
 
     }

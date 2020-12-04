@@ -2,7 +2,6 @@ package com.nuitdelinfo.app.users.controller;
 
 import java.util.Optional;
 
-import com.nuitdelinfo.app.model.Group;
 import com.nuitdelinfo.app.model.User;
 import com.nuitdelinfo.app.users.service.UserService;
 

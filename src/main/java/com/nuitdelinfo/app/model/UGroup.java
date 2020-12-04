@@ -11,9 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import org.springframework.lang.Nullable;
 
 @Entity
-public class Group {
+public class UGroup {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -21,14 +23,16 @@ public class Group {
     private String name;
 
     @ElementCollection
-    @ManyToMany(targetEntity=User.class, mappedBy="groups", fetch = FetchType.EAGER)
+    @Nullable
+    @ManyToMany(targetEntity=User.class, mappedBy="userGroups", fetch = FetchType.EAGER)
     private Map<String, User> subscribers;
 
     @ElementCollection
+    @Nullable
     @OneToMany(targetEntity = Post.class, mappedBy ="group", fetch = FetchType.EAGER)
     private Set<Post> posts;
 
-    public Group(String name, Map<String, User> subscribers) {
+    public UGroup(String name, Map<String, User> subscribers) {
         this.name = name;
         this.subscribers = subscribers;
     }
@@ -57,7 +61,7 @@ public class Group {
         this.subscribers = subscribers;
     }
 
-    public Group() {
+    public UGroup() {
     }
 
     @Override
@@ -88,7 +92,7 @@ public class Group {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Group other = (Group) obj;
+        UGroup other = (UGroup) obj;
         if (id != other.id)
             return false;
         return true;

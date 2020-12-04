@@ -1,7 +1,7 @@
 package com.nuitdelinfo.app.users.service;
 
 import java.util.Optional;
-import com.nuitdelinfo.app.model.Group;
+import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 
 public interface UserService {
@@ -17,7 +17,7 @@ public interface UserService {
     void modifyPseudo(Optional<User> user,String pseudo);
     void modifyEmail(Optional<User> user,String email);
 
-    void subscribe(Optional<User> user,Optional<Group> group);
+    void subscribe(Optional<User> user,Optional<UGroup> group);
     void unsubscribe(Optional<User> user,Long idg);
 	Optional<User> getByID(Long id);
 }

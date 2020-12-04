@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -22,17 +23,19 @@ public class Post {
     private String description;
     private String content;
 
-    @ManyToOne(targetEntity=Group.class)
-    private Group group;
+    @ManyToOne(targetEntity=UGroup.class)
+    @JoinColumn(name="POST_ID", nullable=false, updatable=false)
+    private UGroup group;
 
     @ManyToOne(targetEntity=User.class)
+    @JoinColumn(name="USER_ID", nullable=false, updatable=false)
     private User user;
 
     @ElementCollection
     @OneToMany(targetEntity = Comment.class, mappedBy ="post", fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
-    public Post(String name, String description, String content, Group group, Set<Comment> comments) {
+    public Post(String name, String description, String content, UGroup group, Set<Comment> comments) {
         this.name = name;
         this.description = description;
         this.content = content;
@@ -75,11 +78,11 @@ public class Post {
         this.content = content;
     }
 
-    public Group getGroup() {
+    public UGroup getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(UGroup group) {
         this.group = group;
     }
 
