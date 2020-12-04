@@ -53,15 +53,16 @@ public class GroupController{
             groupService.deleteUsertoGroup(group, user, user.get().getName());
     }
 
-    @DeleteMapping("/group/{idg}/user/{id}")
+    @DeleteMapping("/group/{idg}")
     public void deleteGroupe(@RequestParam Long idg) {
         Optional<UGroup> group = groupService.getByIDG(idg);
-        groupService.deleteGroupe(group);
+        if(group.isPresent())
+            groupService.deleteGroupe(group,group.get().getName());
     }
 
     @PostMapping("/group")
-    public void addGroup(@RequestParam UGroup group){
-        UGroup newgroup = group;  
-        groupService.save(group);
+    public void addGroup(@RequestParam Optional<UGroup> group){  
+        if(group.isPresent())
+            groupService.save(group.get());
     }
 }

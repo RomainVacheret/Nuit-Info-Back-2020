@@ -1,8 +1,8 @@
 package com.nuitdelinfo.app.groups.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collector;
 
 import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
@@ -18,7 +18,11 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void addUsertoGroup(Optional<UGroup> group, Optional<User> user) {
-        group.map(group.get().getSubscribers().put(user.get().getName(), user.get()));
+        Map<String,User> subs = new HashMap<>();
+        if(user.isPresent() && group.isPresent()){
+            subs.put(user.get().getName(), user.get());
+            group.get().setSubscribers(subs);
+        }
     }
     
     @Override
@@ -28,18 +32,13 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    void deleteGroupe(Optional<UGroup> group,String GroupName){
+    public void deleteGroupe(Optional<UGroup> group, String groupName){
         if(group.isPresent())
-            group.get().getSubscribers().remove(GroupName);
+            group.get().getSubscribers().remove(groupName);
     }
 
     @Override
-    void addGroup(Optional<UGroup> group,String GroupName){
-        group.map( group.get().getSubscribers().add(GroupName));
-    }
-
-    @Override
-    void modifyGName(Optional<UGroup> group,String groupName){
+    public void modifyGName(Optional<UGroup> group,String groupName){
         if(group.isPresent())
             group.get().setName(groupName);       
     }
@@ -53,12 +52,6 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void save(UGroup group){
         repository.save(group);
-    }
-
-    @Override
-    public void deleteGroupe(Optional<UGroup> group) {
-        // TODO Auto-generated method stub
-
     }
 }
 
