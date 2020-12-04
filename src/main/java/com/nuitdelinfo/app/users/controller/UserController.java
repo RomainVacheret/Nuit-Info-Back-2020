@@ -1,7 +1,12 @@
 package com.nuitdelinfo.app.users.controller;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
+import com.nuitdelinfo.app.model.Comment;
+import com.nuitdelinfo.app.model.Post;
+import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.ConfirmationToken;
 import com.nuitdelinfo.app.model.User;
 import com.nuitdelinfo.app.token.ConfirmationTokenService;
@@ -21,6 +26,7 @@ import org.springframework.web.context.request.WebRequest;
 @RestController
 @CrossOrigin
 public class UserController {
+    
     
     @Autowired
     private UserService userService;
@@ -42,7 +48,7 @@ public class UserController {
     // }
     
     @PostMapping("/sign-up")
-	String signUp(User user) {
+	public String signUp(User user) {
 
 		userService.signUpUser(user);
 
@@ -50,7 +56,7 @@ public class UserController {
     }
     
     @GetMapping("/confirm")
-	String confirmMail(@RequestParam("token") String token) {
+	public String confirmMail(@RequestParam("token") String token) {
 
 		Optional<ConfirmationToken> optionalConfirmationToken = confirmationTokenService.findConfirmationTokenByToken(token);
 
@@ -82,7 +88,7 @@ public class UserController {
         Optional<User> user = userService.getByID(id);
         userService.modifyPseudo(user, pseudo);
         if(user.isPresent())
-            return user.get().getPseudo();
+            return user.get().getUsername();
         return "";
     }
     @PutMapping(path = "/user/{id}/email")
@@ -114,14 +120,60 @@ public class UserController {
     /* @PostMapping(path ="/user/{id}/group/{id}")
     public void addGroup(@RequestParam Long id,@RequestParam Long idg) {
         Optional<User> user = userService.getByID(id);
-        Optional<Group> group = groupService.getByID(idg);
+        Optional<UGroup> group = groupService.getByID(idg);
         userService.subscribe(user, group);
     } */
 
-    @DeleteMapping(path ="/user/{id}/group/{id}")
+    @DeleteMapping(path ="/user/{id}/group/{idg}")
     public void deleteGroup(@RequestParam Long id,@RequestParam Long idg) {
         Optional<User> user = userService.getByID(id);
         userService.unsubscribe(user, idg);
+    }
+
+    @GetMapping("/user/{id}/name")
+    public String displayName(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayName(user);
+    }
+
+    @GetMapping("/user/{id}/lastname")
+    public String displayLastName(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayLastName(user);
+    }
+
+    @GetMapping("/user/{id}/pseudo")
+    public String displayPseudo(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayPseudo(user);
+    }
+
+    @GetMapping("/user/{id}/email")
+    public String displayEmail(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayEmail(user);
+    }
+    @GetMapping("/user/{id}/friends")
+    public Map<String, User> displayFriends(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayFriends(user);
+    }
+    @GetMapping("/user/{id}/groups")
+    public Set<UGroup> displayGroups(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayGroups(user);
+    }
+
+    @GetMapping("/user/{id}/comments")
+    public Set<Comment> displayComments(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayComments(user);
+    }
+
+    @GetMapping("/user/{id}/posts")
+    public Set<Post> displayPost(@RequestParam Long id){
+        Optional<User> user = userService.getByID(id);
+        return userService.displayPosts(user);
     }
 
     @GetMapping("/user/registration")

@@ -120,10 +120,6 @@ public class User implements UserDetails {
         this.lastName = lastName;
     }
 
-    public String getPseudo() {
-        return pseudo;
-    }
-
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
@@ -159,6 +155,14 @@ public class User implements UserDetails {
     public void setFriends(Map<String, User> friends) {
         this.friends = friends;
     }
+    public void setComment(Comment comment){
+        comments.add(comment);
+    }
+
+    public void setPost(Post post){
+        posts.add(post);
+    }
+    
 
     public User() {
     }
@@ -213,15 +217,6 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Set<UGroup> getUserGroups() {
-        return userGroups;
-    }
-
-    public void setUserGroups(Set<UGroup> userGroups) {
-        this.userGroups = userGroups;
-    }
-
     public Set<Comment> getComments() {
         return comments;
     }
