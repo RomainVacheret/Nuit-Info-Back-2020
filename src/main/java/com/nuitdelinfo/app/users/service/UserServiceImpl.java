@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public boolean isEnabled(Optional<User> user) {
-		return repository.findById(user.get().getId()).get().getEnabled();
+		return repository.findById(user.get().getId()).get().isEnabled();
     }
     
     @Override

@@ -241,10 +241,6 @@ public class User implements UserDetails {
         this.locked = locked;
     }
 
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
