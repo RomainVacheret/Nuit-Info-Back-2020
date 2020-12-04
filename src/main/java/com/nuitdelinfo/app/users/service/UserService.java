@@ -1,10 +1,14 @@
 package com.nuitdelinfo.app.users.service;
 
 import java.util.Optional;
+
+import com.nuitdelinfo.app.model.ConfirmationToken;
 import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 
-public interface UserService {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public interface UserService extends UserDetailsService{
 
     void connection(User user);
     void deconnection(User user);
@@ -20,4 +24,6 @@ public interface UserService {
     void subscribe(Optional<User> user,Optional<UGroup> group);
     void unsubscribe(Optional<User> user,Long idg);
 	Optional<User> getByID(Long id);
+    void signUpUser(User user);
+    void confirmUser(ConfirmationToken confirmationToken);
 }

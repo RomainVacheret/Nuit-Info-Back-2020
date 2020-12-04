@@ -2,25 +2,62 @@ package com.nuitdelinfo.app.users.controller;
 
 import java.util.Optional;
 
+import com.nuitdelinfo.app.model.ConfirmationToken;
 import com.nuitdelinfo.app.model.User;
+import com.nuitdelinfo.app.token.ConfirmationTokenService;
 import com.nuitdelinfo.app.users.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 @RestController
 @CrossOrigin
 public class UserController {
     
     @Autowired
-
     private UserService userService;
+
+    @Autowired
+    private ConfirmationTokenService confirmationTokenService;
     //private GroupService groupService;
+
+    // @GetMapping("/sign-in")
+	// String signIn() {
+
+	// 	return "sign-in";
+    // }
+    
+    // @GetMapping("/sign-up")
+	// String signUp() {
+
+	// 	return "sign-up";
+    // }
+    
+    @PostMapping("/sign-up")
+	String signUp(User user) {
+
+		userService.signUpUser(user);
+
+		return "redirect:/sign-in";
+    }
+    
+    @GetMapping("/confirm")
+	String confirmMail(@RequestParam("token") String token) {
+
+		Optional<ConfirmationToken> optionalConfirmationToken = confirmationTokenService.findConfirmationTokenByToken(token);
+
+		optionalConfirmationToken.ifPresent(userService::confirmUser);
+
+		return "/sign-in";
+	}
 
     @PutMapping(path = "/user/{id}/name")
     public String modifyName(@RequestParam Long id, String name){
@@ -86,5 +123,11 @@ public class UserController {
         Optional<User> user = userService.getByID(id);
         userService.unsubscribe(user, idg);
     }
-    
+
+    @GetMapping("/user/registration")
+    public String showregistrationForm(WebRequest request, Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "registration";
     }
+}

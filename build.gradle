@@ -63,7 +63,6 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
      //Open Api 3
@@ -71,6 +70,10 @@ dependencies {
     compile group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.0'
     // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-data-rest
     compile group: 'org.springdoc', name: 'springdoc-openapi-data-rest', version: '1.5.0'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'
+    compile 'org.springframework:spring-context-support'
+    compile 'javax.mail:mail:1.4.7'
 }
 
 test {

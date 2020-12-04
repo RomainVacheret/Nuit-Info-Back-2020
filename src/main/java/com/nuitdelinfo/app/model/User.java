@@ -1,24 +1,34 @@
 package com.nuitdelinfo.app.model;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.Builder;
 
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  long id;
+    private long id;
 
     private String name;
 
@@ -26,16 +36,24 @@ public class User {
 
     private String pseudo;
 
+    private String password;
+
+    @OneToOne
+    @JoinColumn(
+        name="user", unique=true, nullable=false, updatable=false)
+    private ConfirmationToken userToken;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-    
+
     @Nullable
-    private  String description;
-    
+    private String description;
+
     @Nullable
     @ElementCollection
-    @ManyToMany(targetEntity = UGroup.class, mappedBy ="subscribers", fetch = FetchType.EAGER)
-    private  Set<UGroup> userGroups;
-    
+    @ManyToMany(targetEntity = UGroup.class, mappedBy = "subscribers", fetch = FetchType.EAGER)
+    private Set<UGroup> userGroups;
+
     @Nullable
     @ElementCollection
     private Map<String, User> friends;
@@ -50,10 +68,8 @@ public class User {
     @OneToMany(targetEntity = Post.class, mappedBy = "user")
     private Set<Post> posts;
 
-
-
     public User(String name, String lastName, String pseudo, String email, String description, Set<UGroup> groups,
-            Map<String, User> friends) {
+            Map<String, User> friends, String password, ConfirmationToken userToken) {
         this.name = name;
         this.lastName = lastName;
         this.pseudo = pseudo;
@@ -61,7 +77,18 @@ public class User {
         this.description = description;
         this.userGroups = groups;
         this.friends = friends;
+        this.password = password;
+        this.userToken = userToken;
     }
+
+    @Builder.Default
+	private UserRole userRole = UserRole.USER;
+
+	@Builder.Default
+	private Boolean locked = false;
+
+	@Builder.Default
+	private Boolean enabled = false;
 
     public long getId() {
         return id;
@@ -171,5 +198,92 @@ public class User {
         if (id != other.id)
             return false;
         return true;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<UGroup> getUserGroups() {
+        return userGroups;
+    }
+
+    public void setUserGroups(Set<UGroup> userGroups) {
+        this.userGroups = userGroups;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public ConfirmationToken getUserToken() {
+        return userToken;
+    }
+
+    public void setUserToken(ConfirmationToken userToken) {
+        this.userToken = userToken;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        final SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(userRole.name());
+		return Collections.singletonList(simpleGrantedAuthority);
+    }
+
+    @Override
+    public String getUsername() {
+        return pseudo;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+       return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+       return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 }
