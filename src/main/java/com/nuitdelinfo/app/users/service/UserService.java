@@ -6,13 +6,15 @@ import java.util.Set;
 
 import com.nuitdelinfo.app.model.Comment;
 import com.nuitdelinfo.app.model.Post;
+
+
+import com.nuitdelinfo.app.model.ConfirmationToken;
 import com.nuitdelinfo.app.model.UGroup;
 import com.nuitdelinfo.app.model.User;
 
-public interface UserService {
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-    void connection(User user);
-    void deconnection(User user);
+public interface UserService extends UserDetailsService{
 
     void addFriend(Optional<User> user, Optional<User> friend);
     void deleteFriend(Optional<User> user,String friendName);
@@ -35,4 +37,6 @@ public interface UserService {
     Set<Post> displayPosts(Optional<User> user);
 
 	Optional<User> getByID(Long id);
+    void signUpUser(User user);
+    void confirmUser(ConfirmationToken confirmationToken);
 }
